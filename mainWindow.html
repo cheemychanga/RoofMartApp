@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,60 +52,4 @@
 </body>
 
 
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Roofmart Software</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-</head>
-
-<body>
-    <nav>
-    <div class="nav-wrapper">    
-        <a class="brand-logo center">Deliveries</a>
-    </nav>
-</div>
-    <ol></ol>
-    <script>
-    const electron = require('electron');
-    const {ipcRenderer} = electron;
-    const ol = document.querySelector('ol');
-    
-    ipcRenderer.on('deliverer:add', function(e, deliverer){
-        ol.className = 'collection';
-        const li = document.createElement('li');
-        li.className = 'collection-item';
-        const itemText = document.createTextNode(deliverer);
-        li.appendChild(itemText);
-        ol.appendChild(li);
-    });
-
-    ipcRenderer.on('address:add', function(e, address){
-        ol.className = 'collection';
-        const li = document.createElement('li')
-        const itemText = document.createTextNode(address);
-        li.className = 'collection-item';
-        li.style.listStyle = "square inside";
-        li.appendChild(itemText);
-        ol.appendChild(li);
-    });
- 
-  ipcRenderer.on('deliverer:clear', function(){
-      ol.innerHTML = '';
-      ol.className = '';
-  });
-    
-  ol.addEventListener('dblclick', removeItem);
-  function removeItem(e){
-      e.target.remove();
-      if(ol.children.length == 0){
-          ol.className = '';
-      }
-  }
-    </script>
-</body>
-
-
->>>>>>> 5e0884730b2eb7ec5862e74754577bebe705efb9
 </html>
