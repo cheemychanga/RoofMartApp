@@ -1,32 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Roofmart Software</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-</head>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <title>Roofmart Software</title>
+        <head>
+        <link rel="stylesheet" href="assets.css">
+        </head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+        </head>
 
-<body>
-    <nav>
-    <div class="nav-wrapper">    
+        <body>
+        <nav>
+        <div class="nav-wrapper">    
         <a class="brand-logo center">Deliveries</a>
-    </nav>
-</div>
-    <ol></ol>
-    <script>
-    const electron = require('electron');
-    const {ipcRenderer} = electron;
-    const ol = document.querySelector('ol');
-    
-    ipcRenderer.on('deliverer:add', function(e, deliverer){
+        </nav>
+        </div>
+        <ol></ol>
+        <a  class="btn-floating btn-large waves-effect waves-light red" id="addButton"><i class="material-icons ">add</i></a>
+        <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+        const ol = document.querySelector('ol');
+
+        ipcRenderer.on('deliverer:add', function(e, deliverer){
         ol.className = 'collection';
         const li = document.createElement('li');
         li.className = 'collection-item';
         const itemText = document.createTextNode(deliverer);
         li.appendChild(itemText);
         ol.appendChild(li);
-    });
+        });
 
-    ipcRenderer.on('address:add', function(e, address){
+        ipcRenderer.on('address:add', function(e, address){
         ol.className = 'collection';
         const li = document.createElement('li')
         const itemText = document.createTextNode(address);
@@ -34,22 +39,59 @@
         li.style.listStyle = "square inside";
         li.appendChild(itemText);
         ol.appendChild(li);
-    });
- 
-  ipcRenderer.on('deliverer:clear', function(){
-      ol.innerHTML = '';
-      ol.className = '';
-  });
-    
-  ol.addEventListener('dblclick', removeItem);
-  function removeItem(e){
-      e.target.remove();
-      if(ol.children.length == 0){
-          ol.className = '';
-      }
-  }
-    </script>
-</body>
+        });
+
+        ipcRenderer.on('deliverer:clear', function(){
+        ol.innerHTML = '';
+        ol.className = '';
+        });
+
+        ol.addEventListener('dblclick', removeItem);
+        function removeItem(e){
+        e.target.remove();
+        if(ol.children.length == 0){
+        ol.className = '';
+        }
+        }
+
+        </script>
+
+        <script>
+        const {BrowserWindow} = require('electron').remote;
+        const url = require('url');
+        const path = require('path');
+
+        var addButton = document.getElementById("addButton");
+        //console.log(addButton);
+        //console.log(BrowserWindow);
+            addButton.addEventListener('click', function(){
+               // console.log("123");
+               // console.log(Menu.getApplicationMenu())
+            addDeliveryWindow = new BrowserWindow({
+                    width: 500,
+                    height: 400,
+                    title: 'Add Deliveries',
+                    frame: false
+                });
+
+                addDeliveryWindow.loadURL(url.format({
+                    pathname: path.join(__dirname, 'addDeliveryWindow.html'),
+                    protocol: 'file:',
+                    slashes: true   
+                }));
+                //Garbage Collection
+            addDeliveryWindow.on('close', function(){
+                addDeliveryWindow = null;
+            });
+
+        });
+
+        </script>
+        </body>
+
+        <!-- <script src="./addDelivery.js" type="text/javascript">
 
 
-</html>
+        </script> -->
+
+        </html>
